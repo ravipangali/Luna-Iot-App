@@ -33,15 +33,9 @@ class HomeDealerSection extends StatelessWidget {
                 route: AppRoutes.vehicle,
               ),
               HomeFeatureCard(
-                title: 'Vehicle Access',
-                subtitle: 'Manage vehicle access permissions',
-                icon: Icons.car_rental,
-                route: AppRoutes.vehicleAccess,
-              ),
-              HomeFeatureCard(
-                title: 'Live Tracking',
+                title: 'All Tracking',
                 subtitle: 'Track your vehicle',
-                icon: Icons.mode_of_travel,
+                icon: Icons.location_on,
                 route: AppRoutes.vehicleLiveTrackingIndex,
               ),
               HomeFeatureCard(
@@ -61,6 +55,39 @@ class HomeDealerSection extends StatelessWidget {
                 subtitle: 'View vehicle fencing',
                 icon: Icons.map,
                 route: AppRoutes.geofence,
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 10),
+
+          // Section Title
+          HomeFeatureSectionTitle(title: 'Track Public'),
+          GridView.count(
+            crossAxisCount: 3,
+            crossAxisSpacing: 7,
+            mainAxisSpacing: 7,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              HomeFeatureCard(
+                title: 'School Vehicle',
+                subtitle: 'Track school vehicles',
+                icon: Icons.directions_bus,
+                route: AppRoutes.vehicle,
+              ),
+
+              HomeFeatureCard(
+                title: 'Public Vehicle',
+                subtitle: 'Track public vehicles',
+                icon: Icons.directions_train_outlined,
+                route: AppRoutes.vehicleHistoryIndex,
+              ),
+              HomeFeatureCard(
+                title: 'Garbage Vehicle',
+                subtitle: 'Track garbage vehicles',
+                icon: Icons.recycling,
+                route: AppRoutes.vehicleReportIndex,
               ),
             ],
           ),

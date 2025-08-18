@@ -13,7 +13,7 @@ class HomeCustomerSection extends StatelessWidget {
       child: Column(
         children: [
           // Section Title
-          HomeFeatureSectionTitle(title: 'Track Private Vehicles'),
+          HomeFeatureSectionTitle(title: 'Track Private'),
           GridView.count(
             crossAxisCount: 3,
             crossAxisSpacing: 7,
@@ -53,16 +53,43 @@ class HomeCustomerSection extends StatelessWidget {
                 route: AppRoutes.geofence,
               ),
               HomeFeatureCard(
-                title: 'Vehicle Access',
-                subtitle: 'Manage vehicle access',
-                icon: Icons.car_rental,
-                route: AppRoutes.vehicleAccess,
-              ),
-              HomeFeatureCard(
                 title: 'Fleet Management',
                 subtitle: 'Manage your fleet',
                 icon: Icons.tire_repair,
                 route: AppRoutes.vehicle,
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 10),
+
+          // Section Title
+          HomeFeatureSectionTitle(title: 'Track Public'),
+          GridView.count(
+            crossAxisCount: 3,
+            crossAxisSpacing: 7,
+            mainAxisSpacing: 7,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              HomeFeatureCard(
+                title: 'School Vehicle',
+                subtitle: 'Track school vehicles',
+                icon: Icons.directions_bus,
+                route: AppRoutes.vehicle,
+              ),
+
+              HomeFeatureCard(
+                title: 'Public Vehicle',
+                subtitle: 'Track public vehicles',
+                icon: Icons.directions_train_outlined,
+                route: AppRoutes.vehicleHistoryIndex,
+              ),
+              HomeFeatureCard(
+                title: 'Garbage Vehicle',
+                subtitle: 'Track garbage vehicles',
+                icon: Icons.recycling,
+                route: AppRoutes.vehicleReportIndex,
               ),
             ],
           ),

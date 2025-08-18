@@ -84,7 +84,6 @@ class AuthController extends GetxController {
         final stopwatch = Stopwatch()..start();
 
         await AuthStorageService.saveAuth(data['phone'], data['token']);
-        await AuthStorageService.saveCredentials(phone, password);
 
         stopwatch.stop();
 
