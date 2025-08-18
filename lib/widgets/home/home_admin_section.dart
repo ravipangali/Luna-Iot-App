@@ -84,8 +84,39 @@ class HomeAdminSection extends StatelessWidget {
               ),
             ],
           ),
-          // Gap
-          SizedBox(height: 10),
+
+          const SizedBox(height: 10),
+
+          // Section Title
+          HomeFeatureSectionTitle(title: 'Track Vehicles'),
+          GridView.count(
+            crossAxisCount: 3,
+            crossAxisSpacing: 7,
+            mainAxisSpacing: 7,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              HomeFeatureCard(
+                title: 'School Vehicle',
+                subtitle: 'Track school vehicles',
+                icon: Icons.directions_bus,
+                route: AppRoutes.vehicle,
+              ),
+
+              HomeFeatureCard(
+                title: 'Public Vehicle',
+                subtitle: 'Track public vehicles',
+                icon: Icons.directions_train_outlined,
+                route: AppRoutes.vehicleHistoryIndex,
+              ),
+              HomeFeatureCard(
+                title: 'Garbage Vehicle',
+                subtitle: 'Track garbage vehicles',
+                icon: Icons.recycling,
+                route: AppRoutes.vehicleReportIndex,
+              ),
+            ],
+          ),
         ],
       ),
     );
