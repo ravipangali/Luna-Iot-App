@@ -47,21 +47,23 @@ class HomeScreen extends StatelessWidget {
       ),
       drawer: HomeDrawer(),
       backgroundColor: AppTheme.backgroundColor,
-      body: Obx(() {
-        if (authController.isLoading.value &&
-            !authController.isLoggedIn.value) {
-          return const Center(child: LoadingWidget());
-        }
+      body: SingleChildScrollView(
+        child: Obx(() {
+          if (authController.isLoading.value &&
+              !authController.isLoggedIn.value) {
+            return const Center(child: LoadingWidget());
+          }
 
-        // Show different sections based on user role
-        if (authController.isSuperAdmin) {
-          return const HomeAdminSection();
-        } else if (authController.isDealer) {
-          return const HomeDealerSection();
-        } else {
-          return const HomeCustomerSection();
-        }
-      }),
+          // Show different sections based on user role
+          if (authController.isSuperAdmin) {
+            return const HomeAdminSection();
+          } else if (authController.isDealer) {
+            return const HomeDealerSection();
+          } else {
+            return const HomeCustomerSection();
+          }
+        }),
+      ),
     );
   }
 }
