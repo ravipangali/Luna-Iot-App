@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:luna_iot/api/api_client.dart';
@@ -61,6 +63,11 @@ class MyApp extends StatelessWidget {
         // If user is logged in, update FCM token
         if (authController.isLoggedIn.value) {
           debugPrint('User is logged in, updating FCM token...');
+          // Add extra delay for iOS to ensure APNS token is ready
+          if (Platform.isIOS) {
+            debugPrint('Waiting for iOS APNS token setup...');
+            await Future.delayed(Duration(seconds: 10));
+          }
           await FirebaseService.updateFcmTokenForLoggedInUser();
 
           // Show active popups after a short delay

@@ -1,6 +1,8 @@
 PODS:
   - device_info_plus (0.0.1):
     - Flutter
+  - Firebase/Analytics (12.0.0):
+    - Firebase/Core
   - Firebase/Core (12.0.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (~> 12.0.0)
@@ -153,6 +155,7 @@ PODS:
 
 DEPENDENCIES:
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
+  - Firebase/Analytics
   - Firebase/Core
   - Firebase/Messaging
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -162,6 +165,7 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/darwin`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
+  - GoogleMaps
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/darwin`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -250,6 +254,6 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: c57bfdc923028eba7b141cc8572510a2a90e79f4
+PODFILE CHECKSUM: b593acbc487250ca36dd406012d9fb996ebe0584
 
 COCOAPODS: 1.16.2

@@ -90,6 +90,21 @@ class VehicleCard extends StatelessWidget {
         // latitude: statusData?['latitude'] ?? givenVehicle.latestLocation?.latitude ?? 0,
       );
 
+      // Update last update time logic to match live tracking screen
+      if (vehicle.latestLocation?.createdAt != null &&
+          vehicle.latestStatus?.createdAt != null) {
+        latestUpdateTime = TimeAgo.timeAgo(
+          vehicle.latestLocation!.createdAt!,
+          dateTime2: vehicle.latestStatus!.createdAt,
+        );
+      } else if (vehicle.latestLocation?.createdAt != null) {
+        latestUpdateTime = TimeAgo.timeAgo(vehicle.latestLocation!.createdAt!);
+      } else if (vehicle.latestStatus?.createdAt != null) {
+        latestUpdateTime = TimeAgo.timeAgo(vehicle.latestStatus!.createdAt!);
+      } else {
+        latestUpdateTime = 'No data available';
+      }
+
       final String vehicleState = VehicleService.getState(vehicle);
 
       return Padding(

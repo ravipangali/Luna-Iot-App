@@ -50,6 +50,10 @@ class _VehicleLiveTrackingShowScreenState
   bool isDisposed = false;
   String lastUpdateTime = '...';
 
+  // Add these variables to store the listeners
+  Worker? _statusWorker;
+  Worker? _locationWorker;
+
   @override
   void initState() {
     super.initState();
@@ -101,18 +105,24 @@ class _VehicleLiveTrackingShowScreenState
   // Start Real time tracking
   void _startRealTimeTracking() {
     _isTracking = true;
-    ever(_socketService.statusUpdates, (Map<String, dynamic> statusUpdates) {
-      if (isDisposed) return;
+
+    // Store the workers so we can dispose them later
+    _statusWorker = ever(_socketService.statusUpdates, (
+      Map<String, dynamic> statusUpdates,
+    ) {
+      if (!mounted) return; // Use mounted instead of isDisposed
 
       final statusData = statusUpdates[widget.vehicle.imei];
-      _updateStatusFromSocket(statusData);
+      if (statusData != null) {
+        _updateStatusFromSocket(statusData);
+      }
     });
 
     // Listen for location updates
-    ever(_socketService.locationUpdates, (
+    _locationWorker = ever(_socketService.locationUpdates, (
       Map<String, dynamic> locationUpdates,
     ) {
-      if (isDisposed) return; // Check if widget is disposed
+      if (!mounted) return; // Use mounted instead of isDisposed
 
       final locationData = locationUpdates[widget.vehicle.imei];
       if (locationData != null) {
@@ -123,9 +133,15 @@ class _VehicleLiveTrackingShowScreenState
 
   // Update Status from socket
   void _updateStatusFromSocket(Map<String, dynamic> statusData) {
+    if (!mounted) return; // Use mounted instead of isDisposed
     if (isDisposed) return; // Check if widget is disposed
 
     try {
+      // Add additional null safety check
+      if (statusData.isEmpty) {
+        debugPrint('Status data is empty, skipping update: $statusData');
+        return;
+      }
       final newStatus = Status.fromJson(statusData);
 
       // Create updated vehicle with new status
@@ -145,10 +161,20 @@ class _VehicleLiveTrackingShowScreenState
         _currentStatus = newStatus;
         vehicleState = newVehicleState;
         vehicleImage = newVehicleImage;
-        if (newStatus.createdAt != null) {
+
+        // Update last update time using same logic as vehicle card
+        if (_currentLocation?.createdAt != null &&
+            newStatus.createdAt != null) {
           lastUpdateTime = TimeAgo.timeAgo(
-            newStatus.createdAt ?? DateTime.now(),
+            _currentLocation!.createdAt!,
+            dateTime2: newStatus.createdAt,
           );
+        } else if (_currentLocation?.createdAt != null) {
+          lastUpdateTime = TimeAgo.timeAgo(_currentLocation!.createdAt!);
+        } else if (newStatus.createdAt != null) {
+          lastUpdateTime = TimeAgo.timeAgo(newStatus.createdAt!);
+        } else {
+          lastUpdateTime = 'No data available';
         }
       });
 
@@ -161,6 +187,7 @@ class _VehicleLiveTrackingShowScreenState
 
   // Update Location from socket
   void _updateLocationFromSocket(Map<String, dynamic> locationData) {
+    if (!mounted) return; // Use mounted instead of isDisposed
     if (isDisposed) return;
     try {
       final newLocation = Location.fromJson(locationData);
@@ -175,10 +202,20 @@ class _VehicleLiveTrackingShowScreenState
           _currentLocation = newLocation;
           _vehiclePosition = newPosition;
           routePoints.add(newPosition);
-          if (newLocation.createdAt != null) {
+
+          // Update last update time using same logic as vehicle card
+          if (newLocation.createdAt != null &&
+              _currentStatus?.createdAt != null) {
             lastUpdateTime = TimeAgo.timeAgo(
-              newLocation.createdAt ?? DateTime.now(),
+              newLocation.createdAt!,
+              dateTime2: _currentStatus!.createdAt,
             );
+          } else if (newLocation.createdAt != null) {
+            lastUpdateTime = TimeAgo.timeAgo(newLocation.createdAt!);
+          } else if (_currentStatus?.createdAt != null) {
+            lastUpdateTime = TimeAgo.timeAgo(_currentStatus!.createdAt!);
+          } else {
+            lastUpdateTime = 'No data available';
           }
 
           _updateMarker();
@@ -644,6 +681,10 @@ class _VehicleLiveTrackingShowScreenState
   void dispose() {
     _isTracking = false;
     _mapController?.dispose();
+
+    // Dispose the workers to prevent memory leaks
+    _statusWorker?.dispose();
+    _locationWorker?.dispose();
     super.dispose();
   }
 }

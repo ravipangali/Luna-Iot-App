@@ -26,8 +26,50 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	
+	<!-- Location permissions - CRITICAL for maps -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location to track vehicles and provide location-based services on the map.</string>
+	
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs access to location in the background to track vehicles and provide location-based services on the map.</string>
+	
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location in the background to track vehicles and provide location-based services on the map.</string>
+	
+	<!-- Camera permission -->
 	<key>NSCameraUsageDescription</key>
 	<string>Camera permission is required for scanning QR codes.</string>
+	
+	<!-- Microphone permission -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone access is needed for notification sounds.</string>
+	
+	<!-- Network security -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	
+	<!-- Background modes -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>background-processing</string>
+		<string>location</string>
+	</array>
+	
+	<!-- Firebase configurations -->
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
+	<false/>
+	
+	<!-- Notification usage description -->
+	<key>NSUserNotificationUsageDescription</key>
+	<string>This app needs to send you notifications about vehicle status and alerts.</string>
+	
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -48,11 +90,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-		<string>background-processing</string>
 	</array>
 </dict>
 </plist>
