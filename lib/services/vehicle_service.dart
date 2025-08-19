@@ -30,7 +30,7 @@ class VehicleService {
       final now = DateTime.now();
       final createdAt = vehicle.latestStatus!.createdAt!;
       final difference = now.difference(createdAt);
-      if (difference.inHours > 3) {
+      if (difference.inHours > 12) {
         return inactive;
       }
     }
